@@ -1,0 +1,27 @@
+package com.springcloud.webfluxdemo.reactor_demo;
+
+
+import java.text.DecimalFormat;
+import java.util.function.Function;
+
+class MyMoney {
+    private final int money;
+
+    public MyMoney(int money){
+        this.money = money;
+    }
+
+    public void printMoney(Function<Integer, String> moneyFormat){
+        System.out.println("我的存款： "+ moneyFormat.apply(this.money));
+    }
+
+}
+
+public class MyMoneyDemo{
+
+    public static void main(String[] args) {
+        MyMoney me = new MyMoney(99999999);
+        Function<Integer, String> integerStringFunction = i -> new DecimalFormat("#,###").format(i);
+        me.printMoney(integerStringFunction.andThen(s -> "人民币" + s));
+    }
+}
